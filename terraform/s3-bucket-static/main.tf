@@ -35,8 +35,13 @@ resource "aws_s3_bucket_acl" "static_site_bucket" {
 resource "aws_s3_bucket_website_configuration" "static_site_bucket" {
   bucket = aws_s3_bucket.static_site_bucket.id
 
-  index_document { suffix = "index.html" }
-  error_document { key    = "index.html" }
+  index_document {
+    suffix = "index.html"
+  }
+
+  error_document {
+    key = "index.html"
+  }
 }
 
 data "aws_iam_policy_document" "public_read" {
@@ -44,7 +49,12 @@ data "aws_iam_policy_document" "public_read" {
     sid     = "PublicReadGetObject"
     effect  = "Allow"
     actions = ["s3:GetObject"]
-    principals { type = "AWS", identifiers = ["*"] }
+
+    principals {
+      type        = "*"
+      identifiers = ["*"]
+    }
+
     resources = ["${aws_s3_bucket.static_site_bucket.arn}/*"]
   }
 }
