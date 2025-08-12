@@ -27,7 +27,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
-G
+
       - name: Extract & sanitize bucket name from Issue title
         id: name
         run: |
@@ -40,7 +40,7 @@ G
           echo "Bucket Name: $CLEAN"
 
       - name: Run Terraform
-        working-directory: terraform/s3-bucket-static   # <— ajuste pro seu path real
+        working-directory: terraform/s3-bucket-static
         run: |
           terraform init -input=false
           terraform apply -auto-approve -input=false -var="bucket_name=${{ env.BUCKET_NAME }}"
